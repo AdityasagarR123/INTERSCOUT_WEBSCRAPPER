@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Sensitive credentials — NEVER commit these
+.env
+.env.*
+*.env
+*.env.*
+!.env.example
+frontend/.env
+frontend/.env.*
+
+# Node / Frontend
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+.lovable/
+bun.lock
+bunfig.toml
+
+# Bright Data collector state
+data/.collector_state.json
+data/.collector_state.tmp
+
+# Processed outputs (derived from raw — reproducible)
+data/processed/
+
+# Figures (reproducible from src/eda.py)
+figures/
+
+# Reports (reproducible)
+reports/
+
+# IDE / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
