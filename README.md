@@ -1,311 +1,1596 @@
-# ⚡ Hacker News Virality Forensics & Content Intelligence Platform
+# ⚡ InterScout — Hacker News Virality Intelligence
 
-> **Predictive Machine Learning Forecasting, Real-Time Post Monitoring, Pre-Submission Title Intelligence, and Live Trend Analytics for Hacker News.**
+### **From first signal to future reach.**
 
-[![Python 3.14](https://img.shields.io/badge/Python-3.14-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.111+-009688?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![scikit-learn](https://img.shields.io/badge/scikit--learn-1.6.1-F7931E?style=flat&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
-[![React 19](https://img.shields.io/badge/React-19.0-61DAFB?style=flat&logo=react&logoColor=black)](https://react.dev/)
-[![Vite](https://img.shields.io/badge/Vite-6.0-646CFF?style=flat&logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-v4.0-06B6D4?style=flat&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![Tests](https://img.shields.io/badge/Tests-66%20Passed-22C55E?style=flat&logo=pytest&logoColor=white)](https://pytest.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+InterScout is a full-stack **Hacker News intelligence and virality analysis platform** that combines machine learning, temporal feature engineering, NLP, historical data, and real-time monitoring to understand **why some stories take off while others disappear.**
 
----
+Instead of looking at a post only after it becomes popular, InterScout focuses on the **early moments of a story's lifecycle**.
 
-## 📖 Table of Contents
+It analyzes signals such as:
 
-- [🎯 Project Overview](#-project-overview)
-- [✨ Key Capabilities & Workflows](#-key-capabilities--workflows)
-- [🖥️ Modern React Frontend (`frontend/`)](#️-modern-react-frontend-frontend)
-- [🧠 Machine Learning Model & Methodology](#-machine-learning-model--methodology)
-- [📡 Bright Data Scraper & Ingestion Pipeline](#-bright-data-scraper--ingestion-pipeline)
-- [🔌 FastAPI Endpoints Reference](#-fastapi-endpoints-reference)
-- [🚀 Quickstart & Installation](#-quickstart--installation)
-- [🧪 Testing & Quality Assurance](#-testing--quality-assurance)
-- [📂 Repository Architecture](#-repository-architecture)
-- [📜 License](#-license)
+* ⚡ Early point velocity
+* 💬 Comment velocity
+* 📈 Ranking movement
+* 🧮 Engagement ratios
+* 🕐 Posting-time patterns
+* ✍️ Title structure
+* 🔎 Historical title similarity
+* 📊 Topic and domain trends
+
+and turns them into actionable intelligence.
 
 ---
 
-## 🎯 Project Overview
+## 🌐 Live Demo
 
-This project answers a central empirical question:
-> *"How much can early engagement dynamics tell us about future Hacker News front-page reach, beyond the information already contained in early point totals alone?"*
+### 🚀 Try InterScout
 
-It provides a production-ready, full-stack intelligence platform combining:
-1. **ML Early-Signal Virality Classifier:** Trained on leakage-free temporal observation data predicting whether a story reaches the top 20% eventual engagement (Label B) within the first 15 minutes.
-2. **Title Intelligence Engine (Pre-Submission):** Evaluates draft headlines using N-gram phrase extraction, structural signal scoring, and TF-IDF similarity against historically viral Hacker News posts.
-3. **Live Post Monitor:** Live polling via public HN Firebase & Algolia APIs, computing point/comment velocities dynamically to stream $P(\text{viral})$ trajectories.
-4. **Live Topic Intelligence Feeds:** Surfaces real-time trending keywords, domain leaderboards, and optimal posting times from continuous scraper snapshots.
-5. **Modern Editorial Frontend:** A reactive, cinematic Vite + React SPA with scroll-driven parallax visuals, interactive charts, and real-time backend synchronization.
+**Frontend**
 
----
+[Open InterScout →](https://interscout-webscrapper-fqcu.vercel.app/?utm_source=chatgpt.com)
 
-## ✨ Key Capabilities & Workflows
+**Backend API**
 
-```
-                                  ┌──────────────────────────────────────────────┐
-                                  │      Virality Forensics Full-Stack           │
-                                  └──────────────────────┬───────────────────────┘
-                                                         │
-                        ┌────────────────────────────────┼───────────────────────────────┐
-                        ▼                                ▼                               ▼
-            ┌──────────────────────┐         ┌──────────────────────┐        ┌──────────────────────┐
-            │ 01. PRE-SUBMISSION   │         │ 02. POST-SUBMISSION  │        │ 03. LIVE INTELLIGENCE│
-            │ Title Intelligence   │         │ Story Momentum Watch │        │ Topic & Domain Feeds │
-            └──────────┬───────────┘         └──────────┬───────────┘        └──────────┬───────────┘
-                       │                                │                               │
-             TF-IDF Corpus Match              Real-Time Algolia/Firebase        Bright Data DCA Scraper
-             Structural Scoring               Point/Comment Velocity            Hourly / Daily Trends
-             Best Posting Window              Probability Trajectory            Domain Leaderboard
-```
+[Open API →](https://interscout-webscrappervirality-intel-api.onrender.com/?utm_source=chatgpt.com)
 
-### 1. Title Intelligence Engine (`/title`)
-* **N-Gram Keyphrase Extraction:** Analyzes multi-word phrases (bigrams/trigrams) against the successful-story corpus.
-* **TF-IDF Cosine Similarity:** Retrieves the closest matching historical submissions with similarity percentages.
-* **Structural Signal Scoring (0–10):** Evaluates character length sweet spots (34–67 chars), word count (5–11 words), colon value-prop structures, specific metrics/numbers, and `Show HN` / bracket tags (`[video]`, `[pdf]`).
-* **Timing Recommendations:** Suggests optimal UTC hours and days of the week for maximum organic traction.
+**Interactive API Documentation**
 
-### 2. Live Story Momentum Monitor (`/monitor`)
-* **Zero Configuration:** Input only the numeric Hacker News `story_id`.
-* **Public HN API Integration:** Pulls live points, comments, publication timestamp, and rank approximation with zero API keys required.
-* **Dynamic Velocity Derivation:** Automatically calculates point velocity ($\Delta\text{pts}/\Delta t$), comment velocity, and rank movement between successive requests.
-* **Trajectory Tracking:** Categorizes momentum (Rising ↑, Stable →, Falling ↓) and plots the chronological probability curve with interactive Recharts.
+[Open Swagger Docs →](https://interscout-webscrappervirality-intel-api.onrender.com/docs?utm_source=chatgpt.com)
 
-### 3. Live Topic Intelligence & Feeds (`/trends`, `/overview`, `/research`)
-* **Trending Keyphrases:** Real-time trending topics and multi-word terms on `/newest` weighted by velocity and points.
-* **Domain Performance Leaderboard:** Ranks external domains by average peak points across collected historical stories.
-* **Competitive Research:** Keyword search across recent raw captures to verify if similar submissions already ran.
-* **Posting Window Heatmap:** Engagement distributions across 24 UTC hours and 7 days of the week.
+The production architecture is:
 
----
-
-## 🖥️ Modern React Frontend (`frontend/`)
-
-The user interface is a dedicated **Vite + React 19 SPA** located in [`frontend/`](./frontend):
-
-* **Editorial Design System:** High-contrast cream paper + dark ink surfaces, Oklch palettes, glassmorphism cards, and grain textures.
-* **Cinematic Motion:** Scroll-expansion hero video (`fifnal-video.mp4`), GSAP + Lenis inertial scrolling, and Framer Motion reveals.
-* **Typography:** Modern variable font pairing featuring *Archivo*, *Instrument Serif*, and *JetBrains Mono*.
-* **State Management:** TanStack React Query with optimistic UI updates and auto-refetching.
-* **Client-Side Routing:** TanStack Router across 7 distinct workflow pages (`/`, `/overview`, `/title`, `/monitor`, `/trends`, `/research`, `/system`).
-
----
-
-## 🧠 Machine Learning Model & Methodology
-
-### 1. Target Label Definitions
-* **Label B (Primary / Benchmark):** Quota-based top-20% by eventual maximum points achieved ($\approx 19.0\%$ positive rate across common-horizon stories). Ties broken deterministically by `story_id` (0 label flips under reverse tie-breaking).
-* **Label A (Secondary):** Actual observed crossover from `/newest` to `/front_page` (22 total crossover positives in the dataset).
-
-### 2. Feature Engineering (12 Features)
-All temporal features are constructed strictly backward-looking using `shift(1)` per story, guaranteeing **zero future-data leakage**:
-
-| Feature Name | Type | Description |
-| :--- | :--- | :--- |
-| `early_points` | Integer | Total points at snapshot cutoff |
-| `early_comments` | Integer | Total comments at snapshot cutoff |
-| `early_rank` | Integer | Position on `/newest` at snapshot cutoff |
-| `points_velocity` | Float | Points gained per hour since prior snapshot |
-| `comments_velocity` | Float | Comments added per hour since prior snapshot |
-| `rank_change` | Integer | Position improvement ($\text{prev\_rank} - \text{current\_rank}$) |
-| `observation_count_early` | Integer | Number of scraper hits inside the cutoff window |
-| `title_length` | Integer | Total character count |
-| `title_word_count` | Integer | Total word count |
-| `title_has_question_mark` | Binary | $1$ if `?` present, else $0$ |
-| `title_has_number` | Binary | $1$ if numeric digits present, else $0$ |
-| `engagement_ratio` | Float | Ratio of $\text{early\_comments} / \text{early\_points}$ |
-
-### 3. Model Architecture & Pipeline
-```
-Raw Input Dict ──► SimpleImputer(strategy='median') ──► StandardScaler() ──► LogisticRegression(C=1.0, class_weight='balanced')
+```text
+┌───────────────────────────────────────┐
+│              VERCEL                   │
+│          React Frontend               │
+└──────────────────┬────────────────────┘
+                   │
+                   │ HTTPS / REST API
+                   ▼
+┌───────────────────────────────────────┐
+│              RENDER                   │
+│          FastAPI Backend              │
+│                                       │
+│  ML Model │ Title Intel │ Monitoring  │
+│  Trends   │ Data Feeds  │ Prediction  │
+└──────────────────┬────────────────────┘
+                   │
+          ┌────────┴────────┐
+          ▼                 ▼
+   Hacker News APIs    Historical Data
 ```
 
-* **Why Logistic Regression?** Outperforms tree models on Precision-Recall AUC, exhibits low generalization gap (Train ROC-AUC `0.9255` vs CV `0.8996`), produces calibrated probabilities, and enables direct coefficient interpretability.
-* **Evaluation Metric:** PR-AUC (Average Precision) prioritized over ROC-AUC due to class imbalance ($\approx 19\%$ positive rate).
+---
 
-### 4. Cross-Validation Performance (15-Minute Horizon)
+# 🎯 The Problem
 
-| Model | CV ROC-AUC | ROC-AUC Std | CV PR-AUC | PR-AUC Std | Train ROC-AUC |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **Logistic Regression (Chosen)** | **0.8996** | **0.0324** | **0.8171** | **0.0321** | **0.9255** |
-| Regularized Random Forest | 0.8986 | 0.0302 | 0.7942 | 0.0281 | 0.9669 |
-| Regularized XGBoost | 0.8839 | 0.0419 | 0.8023 | 0.0369 | 0.9479 |
-| Baseline (Points Only) | 0.8897 | 0.0410 | 0.7383 | 0.0504 | — |
+Hacker News has an enormous amount of information hidden inside the first few minutes of a submission.
 
-*The full 12-feature model yields a **+0.0788 PR-AUC gain** over the points-only baseline at 15 minutes.*
+Two stories can have almost identical point counts but completely different trajectories.
 
-### 5. Multi-Horizon Scaling
+Consider:
 
-| Horizon | Stories | Positive Rate | Baseline PR-AUC | Full Model PR-AUC | Marginal Gain |
-| :---: | :---: | :---: | :---: | :---: | :---: |
-| **15 min** | 469 | 18.98% | 0.7383 | **0.8171** | **+0.0788** |
-| **30 min** | 469 | 18.98% | 0.8987 | **0.9189** | **+0.0202** |
-| **60 min** | 469 | 18.98% | 0.9266 | **0.9413** | **+0.0147** |
+```text
+Story A
+
+100 points
+↓
+Slow point growth
+↓
+Few new comments
+↓
+Rank starts falling
+↓
+Momentum disappears
+```
+
+versus:
+
+```text
+Story B
+
+100 points
+↓
+Rapid point growth
+↓
+Comments accelerating
+↓
+Rank improving
+↓
+Momentum compounds
+↓
+Story reaches the front page
+```
+
+A simple points-based system sees:
+
+```text
+100 points vs 100 points
+```
+
+InterScout attempts to see:
+
+```text
+100 points
++
+how quickly they arrived
++
+how comments are behaving
++
+how ranking is changing
++
+how the title compares historically
++
+when the story was posted
+```
+
+That difference is the foundation of the project.
 
 ---
 
-## 📡 Bright Data Scraper & Ingestion Pipeline
+# 🧠 Core Research Question
 
-Continuous background data collection is powered by **Bright Data Data Collector API (DCA)**, saving raw JSON snapshots under `data/raw/`:
+InterScout is built around one central question:
 
-| Collector Name | Bright Data Collector ID | Target URL | Polling Interval |
-| :--- | :--- | :--- | :--- |
-| **`newest`** | `c_msxgknap1ptjrrcetr` | `https://news.ycombinator.com/newest` | Every 8 minutes (`480s`) |
-| **`front_page`** | `c_msxfwz2h1v0fxwlu83` | `https://news.ycombinator.com/` | Every 1 hour (`3600s`) |
+> **Can early engagement dynamics predict future Hacker News reach beyond what early point totals alone can tell us?**
 
-* **State Tracking:** Managed via `data/.collector_state.json` ensuring zero duplicate processing.
-* **Auto Ingestion (`src/ingest.py`):** Automatically back-calculates submission timestamps, cleans scraper artifacts, computes temporal velocity features, and updates processed CSV datasets.
+The system therefore treats virality as a **temporal prediction problem**.
+
+```text
+                     STORY CREATED
+                           │
+                           ▼
+                    ┌────────────┐
+                    │  0 minutes │
+                    └─────┬──────┘
+                          │
+                          ▼
+                 ┌─────────────────┐
+                 │ Early Observations│
+                 └────────┬────────┘
+                          │
+          ┌───────────────┼────────────────┐
+          ▼               ▼                ▼
+      Points          Comments           Rank
+          │               │                │
+          └───────────────┼────────────────┘
+                          ▼
+                 Temporal Features
+                          │
+                          ▼
+                  Machine Learning
+                          │
+                          ▼
+                    P(Viral)
+                          │
+                          ▼
+              Future Engagement Outcome
+```
 
 ---
 
-## 🔌 FastAPI Endpoints Reference
+# ✨ What InterScout Can Do
 
-All endpoints are hosted under `http://127.0.0.1:8000` and documented via Swagger UI at **`/docs`**.
+InterScout currently has four major intelligence systems.
 
-### Title Intelligence (Pre-Submission)
-* `POST /api/v1/score_title` — Evaluates a draft title, returning `pattern_score` (0–10), matched phrases, structural flags, similar stories, and recommended posting time.
-* `POST /api/v1/refresh_corpus` — Rebuilds `title_corpus.json` and refits TF-IDF vectors from `all_observations.csv`.
+| System                    | What it does                                                            |
+| ------------------------- | ----------------------------------------------------------------------- |
+| 🔮 **Virality Predictor** | Predicts whether a story is likely to enter the high-engagement segment |
+| ✍️ **Title Intelligence** | Analyzes a title before it is submitted                                 |
+| 📈 **Live Story Monitor** | Tracks momentum after publication                                       |
+| 🔎 **Trend Intelligence** | Finds trending topics, domains and posting patterns                     |
 
-### Live Post Monitor
-* `GET /api/v1/monitor/{story_id}` — Polls real-time HN data, extracts velocity features, and returns $P(\text{viral})$.
-* `GET /api/v1/monitor/{story_id}/history` — Returns chronological snapshot history and trajectory direction (rising ↑, stable →, falling ↓).
-* `DELETE /api/v1/monitor/{story_id}/history` — Clears cached monitoring history for a story.
+Together they create an end-to-end workflow:
 
-### Live Feeds & Trends
-* `GET /api/v1/trending?hours=5&top_n=10` — Top keywords/topics weighted by frequency and points.
-* `GET /api/v1/trending/domains?top_n=15` — Domain performance leaderboard ranked by historical average peak points.
-* `GET /api/v1/trending/best_time` — Recommended posting day and UTC hour.
-* `GET /api/v1/similar?topic=vector+db&hours=48` — Topic matching against recent captures.
-
-### Core Model & System
-* `POST /api/v1/predict` / `POST /api/v1/predict/{story_id}` — Direct 12-feature prediction ($P \ge 0.50$ default, $0.778$ F1-optimal).
-* `POST /api/v1/batch_predict` — Batch scores up to 500 stories in a single request.
-* `POST /api/v1/collect` — Triggers an asynchronous Bright Data collection job.
-* `GET /health` — Liveness check and model verification.
+```text
+                    BEFORE POSTING
+                         │
+                         ▼
+                  TITLE INTELLIGENCE
+                         │
+                         ▼
+                   SUBMIT STORY
+                         │
+                         ▼
+                    LIVE MONITOR
+                         │
+                         ▼
+                 EARLY SIGNALS
+                         │
+                         ▼
+                  VIRALITY MODEL
+                         │
+                         ▼
+                 MOMENTUM TRAJECTORY
+                         │
+                         ▼
+                HISTORICAL ANALYSIS
+```
 
 ---
 
-## 🚀 Quickstart & Installation
+# 01 — 🔮 Virality Prediction
 
-### 1. Clone the Repository
+The core ML component predicts whether a Hacker News story belongs to the **top 20% of eventual engagement**.
+
+The model uses information available during an early observation window rather than relying on the final outcome.
+
+### Feature Set
+
+The current model uses **12 features**.
+
+| Feature                   | Description                              |
+| ------------------------- | ---------------------------------------- |
+| `early_points`            | Points at the observation cutoff         |
+| `early_comments`          | Comments at the observation cutoff       |
+| `early_rank`              | Position in `/newest`                    |
+| `points_velocity`         | Rate at which points are increasing      |
+| `comments_velocity`       | Rate at which comments are increasing    |
+| `rank_change`             | Change in ranking over time              |
+| `observation_count_early` | Number of observations before cutoff     |
+| `title_length`            | Number of characters                     |
+| `title_word_count`        | Number of words                          |
+| `title_has_question_mark` | Whether the title contains `?`           |
+| `title_has_number`        | Whether the title contains a number      |
+| `engagement_ratio`        | Relationship between comments and points |
+
+---
+
+# 🛡️ Temporal Leakage Prevention
+
+One of the most important design decisions in InterScout is preventing **future information from entering an early prediction**.
+
+If the model is supposed to answer:
+
+> "Would this story look promising after 15 minutes?"
+
+then it cannot use information from minute 20 or minute 30.
+
+The feature pipeline therefore constructs temporal variables from **previous observations only**.
+
+Conceptually:
+
+```text
+TIME ───────────────────────────────────────────────►
+
+t0          t5          t10         t15         t30
+│           │            │            │            │
+│           │            │            │            │
+└───────────┴────────────┴────────────┘
+                         │
+                         ▼
+                  Prediction Point
+                     = 15 min
+
+Allowed information:
+t0 → t5 → t10 → t15
+
+Future information:
+t30 ❌
+```
+
+Temporal calculations use backward-looking transformations such as:
+
+```python
+shift(1)
+```
+
+This prevents the model from accidentally learning from future observations.
+
+---
+
+# 🤖 Machine Learning Pipeline
+
+The production model uses a scikit-learn pipeline:
+
+```text
+Raw Features
+     │
+     ▼
+┌──────────────────────┐
+│ Median Imputation    │
+│ SimpleImputer        │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│ StandardScaler       │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│ Logistic Regression  │
+│                      │
+│ C = 1.0              │
+│ class_weight=balanced│
+└──────────┬───────────┘
+           │
+           ▼
+       P(Viral)
+```
+
+---
+
+# 🏆 Why Logistic Regression?
+
+Several approaches were evaluated, including:
+
+* Logistic Regression
+* Random Forest
+* XGBoost
+* Points-only baseline
+
+Logistic Regression was selected as the production model because it provided a strong balance of:
+
+* predictive performance
+* generalization
+* interpretability
+* probability output
+* low inference complexity
+
+The dataset is imbalanced, with approximately **19% positive examples**.
+
+For this reason, **Precision-Recall AUC** is particularly important.
+
+---
+
+# 📊 Model Performance
+
+### 15-Minute Prediction Horizon
+
+| Model                  | CV ROC-AUC |  CV PR-AUC | Train ROC-AUC |
+| ---------------------- | ---------: | ---------: | ------------: |
+| 🏆 Logistic Regression | **0.8996** | **0.8171** |        0.9255 |
+| Random Forest          |     0.8986 |     0.7942 |        0.9669 |
+| XGBoost                |     0.8839 |     0.8023 |        0.9479 |
+| Points-only baseline   |     0.8897 |     0.7383 |             — |
+
+### Key Result
+
+The complete feature model achieves:
+
+```text
+PR-AUC = 0.8171
+```
+
+compared with:
+
+```text
+Points-only baseline = 0.7383
+```
+
+giving:
+
+```text
+Absolute improvement = +0.0788 PR-AUC
+```
+
+This suggests that **early dynamics contain useful information beyond raw early point totals**.
+
+---
+
+# ⏱️ Multi-Horizon Evaluation
+
+The model was evaluated across multiple observation horizons.
+
+| Horizon    | Stories | Positive Rate | Baseline PR-AUC | Full Model PR-AUC |        Gain |
+| ---------- | ------: | ------------: | --------------: | ----------------: | ----------: |
+| **15 min** |     469 |        18.98% |          0.7383 |        **0.8171** | **+0.0788** |
+| **30 min** |     469 |        18.98% |          0.8987 |        **0.9189** | **+0.0202** |
+| **60 min** |     469 |        18.98% |          0.9266 |        **0.9413** | **+0.0147** |
+
+The 15-minute horizon is particularly important because it represents the earliest practical decision window.
+
+---
+
+# 🎯 Prediction Threshold
+
+The system can use probability thresholds to convert the model output into a classification.
+
+For example:
+
+```text
+P(Viral) < threshold
+        │
+        ▼
+     Not Viral
+
+P(Viral) ≥ threshold
+        │
+        ▼
+      Viral
+```
+
+The system also supports an F1-oriented threshold for more conservative classification.
+
+This allows downstream applications to choose between:
+
+* higher recall
+* higher precision
+* balanced F1 performance
+
+---
+
+# 02 — ✍️ Title Intelligence
+
+InterScout isn't only useful after a story has been submitted.
+
+It can also be used **before publication**.
+
+Enter a proposed Hacker News title and the title intelligence engine analyzes its characteristics.
+
+```text
+                    DRAFT TITLE
+                         │
+                         ▼
+              ┌────────────────────┐
+              │ Structural Analysis │
+              └─────────┬──────────┘
+                        │
+          ┌─────────────┼──────────────┐
+          ▼             ▼              ▼
+       N-Grams       TF-IDF        Title Signals
+          │             │              │
+          └─────────────┼──────────────┘
+                        ▼
+               Historical Corpus
+                        │
+                        ▼
+                Similar Stories
+                        │
+                        ▼
+                  Title Report
+```
+
+---
+
+## 🔤 N-Gram Analysis
+
+The system extracts meaningful phrases from historical Hacker News titles.
+
+This includes:
+
+* unigrams
+* bigrams
+* trigrams
+* recurring phrases
+
+The objective is not to say:
+
+> "Use this exact phrase."
+
+Instead, the engine identifies **patterns that repeatedly appear in historically successful submissions**.
+
+---
+
+# 🔎 TF-IDF Similarity
+
+Historical titles are converted into TF-IDF vectors.
+
+For a new title:
+
+```text
+Draft Title
+     │
+     ▼
+TF-IDF Vector
+     │
+     ▼
+Cosine Similarity
+     │
+     ▼
+Historical Titles
+```
+
+This allows InterScout to find previously submitted stories with similar wording or concepts.
+
+The interface can then expose:
+
+* similar titles
+* similarity scores
+* related phrases
+* historical engagement context
+
+---
+
+# 📐 Structural Title Signals
+
+The title engine also evaluates structural properties.
+
+Examples include:
+
+* character length
+* word count
+* numbers
+* question marks
+* colon-based structures
+* `Show HN`
+* bracket-style tags
+* recurring patterns
+
+These signals contribute to a **pattern-oriented title score**.
+
+The score should be interpreted as:
+
+> **How closely does this title resemble patterns observed in the historical corpus?**
+
+It is **not a guarantee of virality**.
+
+---
+
+# 🕐 Posting-Time Intelligence
+
+Historical submissions are grouped according to:
+
+* UTC hour
+* day of week
+
+The system can identify periods historically associated with stronger engagement.
+
+This provides an additional layer of context:
+
+```text
+TITLE
+  +
+TOPIC
+  +
+HISTORICAL PATTERN
+  +
+POSTING WINDOW
+```
+
+Again, this is observational intelligence rather than causal evidence.
+
+---
+
+# 03 — 📈 Live Story Monitoring
+
+Once a story is published, InterScout can track it in real time.
+
+The user provides a Hacker News `story_id`.
+
+The backend retrieves information such as:
+
+* points
+* comments
+* rank
+* timestamp
+
+and derives dynamic features.
+
+```text
+Story ID
+   │
+   ▼
+Hacker News
+   │
+   ▼
+Current State
+   │
+   ├── Points
+   ├── Comments
+   ├── Rank
+   └── Timestamp
+          │
+          ▼
+    Feature Engineering
+          │
+          ├── Point Velocity
+          ├── Comment Velocity
+          └── Rank Change
+                  │
+                  ▼
+             ML Model
+                  │
+                  ▼
+             P(Viral)
+```
+
+---
+
+# 📈 Momentum Trajectory
+
+The monitor doesn't only show a single prediction.
+
+It can record successive observations.
+
+Example:
+
+```text
+09:00     P(Viral) = 0.31
+   │
+09:05     P(Viral) = 0.42
+   │
+09:10     P(Viral) = 0.57
+   │
+09:15     P(Viral) = 0.71
+```
+
+This produces a trajectory rather than a static number.
+
+The frontend can therefore distinguish between:
+
+```text
+↑ RISING
+→ STABLE
+↓ FALLING
+```
+
+This is one of the most important differences between InterScout and a simple prediction API.
+
+---
+
+# 04 — 🔎 Trend Intelligence
+
+InterScout also looks beyond individual stories.
+
+It can analyze the broader Hacker News ecosystem.
+
+---
+
+## 🔥 Trending Topics
+
+Recent observations can be analyzed to identify topics and keywords gaining attention.
+
+Signals include:
+
+* frequency
+* engagement
+* recent activity
+* velocity
+
+This provides a high-level view of what the Hacker News community is currently discussing.
+
+---
+
+# 🌐 Domain Intelligence
+
+The system aggregates historical performance by domain.
+
+Conceptually:
+
+```text
+Domain
+   │
+   ├── Number of stories
+   ├── Engagement
+   ├── Peak points
+   └── Historical performance
+          │
+          ▼
+     Domain Ranking
+```
+
+This allows users to explore patterns such as which domains have historically produced highly engaged submissions.
+
+---
+
+# 🔎 Similar Story Research
+
+The research workflow can search historical captures for related topics.
+
+For example:
+
+```text
+Topic:
+"vector databases"
+
+        ↓
+
+Historical stories
+        ↓
+
+Similar submissions
+        ↓
+
+Engagement
+        ↓
+
+Domains
+        ↓
+
+Posting times
+```
+
+This can help answer:
+
+* Has this topic already been discussed?
+* How recently?
+* What similar stories performed well?
+* Which domains appeared repeatedly?
+* What was their engagement?
+
+---
+
+# 📡 Data Collection Architecture
+
+Historical data is collected separately from live monitoring.
+
+The collection layer uses the **Bright Data Data Collector API**.
+
+```text
+                  BRIGHT DATA
+                      │
+                      ▼
+              Raw HN Snapshots
+                      │
+                      ▼
+             ┌─────────────────┐
+             │ Deduplication   │
+             └────────┬────────┘
+                      │
+                      ▼
+             ┌─────────────────┐
+             │ Normalization   │
+             └────────┬────────┘
+                      │
+                      ▼
+             Processed Dataset
+                      │
+          ┌───────────┴───────────┐
+          ▼                       ▼
+   Temporal Features         Title Corpus
+          │                       │
+          ▼                       ▼
+     ML Training             TF-IDF Engine
+```
+
+Two primary collection streams are used:
+
+| Collector    | Source                 |   Interval |
+| ------------ | ---------------------- | ---------: |
+| `newest`     | Hacker News `/newest`  | ~8 minutes |
+| `front_page` | Hacker News front page |    ~1 hour |
+
+Raw snapshots are stored separately before processing.
+
+---
+
+# 🧹 Data Processing
+
+The processing layer transforms raw observations into model-ready data.
+
+Important artifacts include:
+
+```text
+data/
+│
+├── raw/
+│   ├── newest/
+│   └── front_page/
+│
+└── processed/
+    ├── all_observations.csv
+    ├── temporal_features.csv
+    └── story_id_overlap.csv
+```
+
+### `all_observations.csv`
+
+Normalized story observations.
+
+### `temporal_features.csv`
+
+Model-ready temporal and content features.
+
+### `story_id_overlap.csv`
+
+Used to inspect overlap between collected story populations.
+
+---
+
+# 🏗️ Complete Architecture
+
+```text
+                         ┌──────────────────────┐
+                         │     HACKER NEWS      │
+                         └───────────┬──────────┘
+                                     │
+                    ┌────────────────┴────────────────┐
+                    │                                 │
+                    ▼                                 ▼
+          ┌──────────────────┐              ┌──────────────────┐
+          │ Bright Data      │              │ HN Public APIs   │
+          │ Historical Data  │              │ Live Monitoring  │
+          └────────┬─────────┘              └────────┬─────────┘
+                   │                                 │
+                   ▼                                 │
+          ┌──────────────────┐                       │
+          │ Raw Snapshots    │                       │
+          └────────┬─────────┘                       │
+                   │                                 │
+                   ▼                                 │
+          ┌──────────────────┐                       │
+          │ Ingestion        │                       │
+          │ Pipeline         │                       │
+          └────────┬─────────┘                       │
+                   │                                 │
+          ┌────────┴─────────┐                       │
+          ▼                  ▼                       │
+   ┌──────────────┐  ┌───────────────┐               │
+   │ Temporal     │  │ Title Corpus  │               │
+   │ Features     │  │ / TF-IDF      │               │
+   └──────┬───────┘  └───────┬───────┘               │
+          │                  │                        │
+          ▼                  ▼                        │
+   ┌──────────────┐  ┌───────────────┐               │
+   │ ML Model     │  │ Title Engine  │               │
+   └──────┬───────┘  └───────┬───────┘               │
+          │                  │                        │
+          └──────────┬───────┘                        │
+                     ▼                                ▼
+             ┌──────────────────────────────────────────┐
+             │                 FASTAPI                  │
+             │                                          │
+             │ Prediction │ Title │ Monitor │ Trends   │
+             └───────────────────┬──────────────────────┘
+                                 │
+                                 │ HTTPS
+                                 ▼
+                       ┌───────────────────┐
+                       │  React Frontend   │
+                       │      Vercel       │
+                       └───────────────────┘
+```
+
+---
+
+# 🔌 Backend API
+
+The production backend is deployed on Render:
+
+[InterScout API](https://interscout-webscrappervirality-intel-api.onrender.com/?utm_source=chatgpt.com)
+
+Interactive documentation:
+
+[Swagger / OpenAPI Docs](https://interscout-webscrappervirality-intel-api.onrender.com/docs?utm_source=chatgpt.com)
+
+---
+
+## Health
+
+### `GET /health`
+
+Used to verify that the API and model are available.
+
+---
+
+# 🤖 Prediction
+
+### `POST /api/v1/predict`
+
+Predict virality from a supplied feature vector.
+
+### `POST /api/v1/predict/{story_id}`
+
+Predict virality for a Hacker News story.
+
+### `POST /api/v1/batch_predict`
+
+Run predictions for multiple stories.
+
+---
+
+# ✍️ Title Intelligence
+
+### `POST /api/v1/score_title`
+
+Analyze a proposed title.
+
+### `POST /api/v1/refresh_corpus`
+
+Refresh the historical title corpus.
+
+---
+
+# 📈 Monitoring
+
+### `GET /api/v1/monitor/{story_id}`
+
+Retrieve the current story state.
+
+### `GET /api/v1/monitor/{story_id}/history`
+
+Retrieve monitoring history.
+
+### `DELETE /api/v1/monitor/{story_id}/history`
+
+Clear stored monitoring history.
+
+---
+
+# 📊 Trends
+
+### `GET /api/v1/trending`
+
+Retrieve trending topics.
+
+Example:
+
+```text
+/api/v1/trending?hours=5&top_n=10
+```
+
+### `GET /api/v1/trending/domains`
+
+Retrieve domain performance.
+
+```text
+/api/v1/trending/domains?top_n=15
+```
+
+### `GET /api/v1/trending/best_time`
+
+Retrieve historical posting-time intelligence.
+
+### `GET /api/v1/similar`
+
+Search for similar historical stories.
+
+```text
+/api/v1/similar?topic=vector+database&hours=48
+```
+
+---
+
+# 📡 Collection
+
+### `POST /api/v1/collect`
+
+Trigger a historical collection job.
+
+This requires the appropriate Bright Data configuration.
+
+---
+
+# 🖥️ Frontend Architecture
+
+The frontend is a React + TypeScript application deployed on Vercel.
+
+[InterScout Live Application](https://interscout-webscrapper-fqcu.vercel.app/?utm_source=chatgpt.com)
+
+Technology:
+
+* React 19
+* TypeScript
+* Vite
+* Tailwind CSS
+* TanStack Router
+* TanStack React Query
+* Recharts
+* Framer Motion
+* GSAP
+* Lenis
+
+---
+
+## Frontend → Backend Flow
+
+```text
+User
+ │
+ ▼
+React Component
+ │
+ ▼
+React Query Hook
+ │
+ ▼
+Typed API Client
+ │
+ ▼
+HTTPS
+ │
+ ▼
+Render / FastAPI
+ │
+ ├── ML model
+ ├── Hacker News API
+ ├── Title engine
+ ├── Trend engine
+ └── Monitoring data
+ │
+ ▼
+JSON
+ │
+ ▼
+React Query Cache
+ │
+ ▼
+Charts / Metrics / Intelligence UI
+```
+
+This separation keeps the frontend focused on presentation while the backend handles:
+
+* data retrieval
+* feature engineering
+* model inference
+* NLP
+* monitoring
+* analytics
+
+---
+
+# 📁 Project Structure
+
+```text
+interscout/
+│
+├── api/
+│   ├── main.py
+│   ├── model.py
+│   ├── schema.py
+│   ├── router.py
+│   ├── title_router.py
+│   ├── monitor_router.py
+│   └── feed_router.py
+│
+├── src/
+│   ├── collector_sync.py
+│   ├── ingest.py
+│   ├── temporal_features.py
+│   ├── title_intelligence.py
+│   ├── live_feed.py
+│   └── ...
+│
+├── data/
+│   ├── raw/
+│   │   ├── newest/
+│   │   └── front_page/
+│   │
+│   └── processed/
+│       ├── all_observations.csv
+│       ├── temporal_features.csv
+│       └── story_id_overlap.csv
+│
+├── model/
+│   ├── features.json
+│   ├── final_logistic_regression_15min.joblib
+│   ├── coefficient_stability_summary.csv
+│   └── horizon_cv_performance.csv
+│
+├── frontend/
+│   ├── public/
+│   └── src/
+│       ├── api/
+│       ├── components/
+│       ├── hooks/
+│       ├── routes/
+│       └── ...
+│
+├── notebooks/
+│   └── virality_forensics_notebook_v1.ipynb
+│
+├── tests/
+│   ├── test_api.py
+│   └── test_collector_sync.py
+│
+├── requirements.txt
+├── .gitignore
+└── README.md
+```
+
+---
+
+# 🚀 Run Locally
+
+## Requirements
+
+```text
+Python 3.14+
+Node.js
+npm
+```
+
+---
+
+## 1. Clone
+
 ```bash
-git clone https://github.com/jiyajain23/scraper-virality-forensics.git
-cd scraper-virality-forensics
+git clone <YOUR_GITHUB_REPOSITORY_URL>
+
+cd interscout
 ```
 
-### 2. Set Up the Python Backend
+---
+
+## 2. Backend
+
+Create a virtual environment:
+
 ```bash
-# Create and activate virtual environment
 python -m venv venv
-# Windows:
-.\venv\Scripts\activate
-# macOS/Linux:
-source venv/bin/activate
+```
 
-# Install dependencies
+### Windows
+
+```bash
+.\venv\Scripts\activate
+```
+
+### macOS / Linux
+
+```bash
+source venv/bin/activate
+```
+
+Install dependencies:
+
+```bash
 pip install -r requirements.txt
 ```
 
-### 3. Configure Environment Variables
-Create a `.env` file in the project root:
+---
+
+## 3. Environment Variables
+
+Create:
+
+```text
+.env
+```
+
+Example:
+
 ```env
-# Optional: Required only if you want the automated Bright Data scraper running
-BRIGHTDATA_API_TOKEN=your_brightdata_token_here
-
-# Optional: Set an API key to protect routes in production (runs in dev mode if unset)
-VIRALITY_API_KEY=your_secret_api_key_here
+BRIGHTDATA_API_TOKEN=your_brightdata_token
+VIRALITY_API_KEY=your_api_key
 ```
 
-### 4. Start the FastAPI Backend
-```bash
-uvicorn api.main:app --reload --port 8000
-```
-* Backend API: **`http://127.0.0.1:8000`**
-* Interactive Swagger Docs: **`http://127.0.0.1:8000/docs`**
-
-### 5. Start the React Frontend
-In a new terminal window:
-```bash
-cd frontend
-npm install
-npm run dev
-```
-* Web Dashboard: **`http://localhost:5173/`**
+Do **not** commit `.env` to Git.
 
 ---
 
-## 🧪 Testing & Quality Assurance
+## 4. Start FastAPI
 
-Run the automated test suite with pytest:
+```bash
+uvicorn api.main:app --reload --port 8000
+```
+
+API:
+
+```text
+http://127.0.0.1:8000
+```
+
+Swagger:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+---
+
+## 5. Start Frontend
+
+```bash
+cd frontend
+
+npm install
+
+npm run dev
+```
+
+Frontend:
+
+```text
+http://localhost:5173
+```
+
+---
+
+# 🧪 Testing
+
+Run:
+
 ```bash
 pytest -v
 ```
 
-**Test Coverage (66 Tests Total):**
-* **API Tests (`tests/test_api.py`):** 21 tests covering health checks, single/batch prediction, threshold logic, missing value imputation, title intelligence scoring, feeds, and monitor endpoints.
-* **Collector Tests (`tests/test_collector_sync.py`):** 45 tests covering configuration, authentication, HTTP trigger payloads, polling retry loops, rate limit handling, deduplication, and raw file integrity.
+The test suite covers areas including:
+
+* API health
+* prediction
+* batch prediction
+* threshold handling
+* missing values
+* title intelligence
+* trend endpoints
+* monitoring
+* collection behavior
+* retries
+* rate limits
+* deduplication
 
 ---
 
-## 📂 Repository Architecture
+# 🔐 Environment & Security
+
+Never commit:
 
 ```text
-scraper-virality-forensics/
-├── api/                                # FastAPI application & routers
-│   ├── main.py                         # App factory, CORS, lifespan model loader & background scraper
-│   ├── model.py                        # Singleton ViralityModel wrapper (with sklearn version bridge)
-│   ├── schema.py                       # Pydantic request/response schemas
-│   ├── router.py                       # Core prediction & collect endpoints
-│   ├── title_router.py                 # Title intelligence scoring routes
-│   ├── monitor_router.py               # Live story monitoring routes
-│   └── feed_router.py                  # Live feeds, trends, domain rankings & best time
-├── data/                               # Data storage & state
-│   ├── .collector_state.json           # Scraper sync state & deduplication tracker
-│   ├── raw/                            # Raw JSON snapshot captures
-│   │   ├── newest/                     # Raw /newest captures
-│   │   └── front_page/                 # Raw /front_page captures
-│   ├── processed/                      # Normalized datasets & velocity features
-│   │   ├── all_observations.csv        # Flattened observation records
-│   │   ├── temporal_features.csv       # Extracted velocity features
-│   │   └── story_id_overlap.csv        # Crossover tracking (newest -> front_page)
-│   └── corpus/                         # Historical title corpus & TF-IDF vectors
-├── frontend/                           # Modern Vite + React 19 Frontend SPA
-│   ├── public/                         # Static assets (favicons, hero video)
-│   ├── src/
-│   │   ├── api/                        # Typed client API layer (fetch wrappers)
-│   │   ├── assets/                     # Parallax images & graphics
-│   │   ├── components/                 # UI, motion, intel, and site components
-│   │   ├── hooks/                      # TanStack React Query hooks
-│   │   ├── routes/                     # TanStack Router pages (all 7 workflows)
-│   │   ├── styles.css                  # Editorial design system & Tailwind v4 tokens
-│   │   └── main.tsx                    # Client SPA entrypoint
-│   ├── package.json
-│   └── vite.config.ts
-├── model/                              # Trained ML artifacts & diagnostic reports
-│   ├── features.json                   # Ordered 12-feature schema
-│   ├── final_logistic_regression_15min.joblib  # Serialized scikit-learn Pipeline
-│   ├── coefficient_stability_summary.csv       # Feature weights & stability metrics
-│   └── horizon_cv_performance.csv              # Multi-horizon benchmark records
-├── notebooks/                          # Research & experimental analysis
-│   └── virality_forensics_notebook_v1.ipynb
-├── src/                                # Core data science & ingestion modules
-│   ├── collector_sync.py               # Bright Data DCA API client & polling worker
-│   ├── ingest.py                       # Ingestion & normalization pipeline
-│   ├── temporal_features.py            # Backward-looking velocity calculation
-│   ├── title_intelligence.py           # N-gram extraction & TF-IDF similarity engine
-│   └── live_feed.py                    # Real-time keyword & domain trend aggregators
-├── tests/                              # Pytest test suite (66 tests)
-│   ├── test_api.py
-│   └── test_collector_sync.py
-├── .gitignore
-├── requirements.txt                    # Python dependencies
-└── README.md                           # Project documentation
+.env
+API keys
+Bright Data credentials
+private tokens
+production secrets
+```
+
+Use environment variables in deployment environments such as Render and Vercel.
+
+---
+
+# ⚠️ Limitations
+
+InterScout is a **forecasting and intelligence system**, not a guaranteed virality oracle.
+
+Several factors are difficult to model.
+
+### External Events
+
+A story may suddenly become popular because of a breaking event that was not visible in its early engagement data.
+
+### Author Effects
+
+Author reputation and established audiences can influence performance.
+
+### Topic Novelty
+
+Completely new topics may behave differently from historical data.
+
+### Ranking Algorithm
+
+Hacker News ranking behavior is not represented here as a complete deterministic formula.
+
+### Observational Data
+
+The system learns from observed behavior.
+
+Therefore:
+
+> **Predictive correlation should not be interpreted as causal evidence.**
+
+### Dataset Size
+
+The current benchmark is based on a limited historical sample.
+
+More data will allow stronger validation across:
+
+* time periods
+* topics
+* authors
+* domains
+* market conditions
+
+---
+
+# 🔬 Future Research
+
+InterScout provides a foundation for several deeper research directions.
+
+## Temporal Models
+
+Future experiments could compare the current model with:
+
+* Gradient Boosting
+* XGBoost
+* LightGBM
+* Temporal CNNs
+* LSTMs
+* Transformers
+* Survival models
+
+---
+
+## Semantic Title Understanding
+
+The current title engine can be extended with:
+
+```text
+Sentence Embeddings
+        +
+Semantic Search
+        +
+Topic Embeddings
+        +
+LLM Representations
+```
+
+This would allow the system to recognize semantic similarity even when two titles use completely different words.
+
+---
+
+## Author-Level Features
+
+Future versions could model:
+
+* previous submissions
+* historical author engagement
+* author consistency
+* author-specific audience effects
+
+---
+
+## Survival Analysis
+
+Rather than predicting only:
+
+```text
+Viral / Not Viral
+```
+
+future models could estimate:
+
+```text
+P(Top 20 | t)
+P(Top 10 | t)
+P(Front Page | t)
+Expected time to threshold
+```
+
+This would turn InterScout into a more complete **time-to-event forecasting system**.
+
+---
+
+## Online Learning
+
+As new Hacker News data arrives, the model could periodically retrain and detect changes in community behavior.
+
+This would allow InterScout to adapt to:
+
+```text
+Changing topics
+Changing ranking behavior
+Changing user behavior
+Changing engagement patterns
 ```
 
 ---
 
-## 📜 License
+# 🧠 Why InterScout?
 
-Distributed under the **MIT License**. See `LICENSE` for more information.
+Most analytics systems answer:
+
+> **"What happened?"**
+
+InterScout tries to answer:
+
+> **"What is happening right now, why might it be happening, and what could happen next?"**
+
+The distinction is:
+
+```text
+Traditional Analytics
+
+      STORY
+        │
+        ▼
+   Final Metrics
+        │
+        ▼
+   What happened?
+
+
+InterScout
+
+      STORY
+        │
+        ▼
+   Early Signals
+        │
+        ▼
+    Momentum
+        │
+        ▼
+    Prediction
+        │
+        ▼
+ Historical Context
+        │
+        ▼
+  What happens next?
+```
+
+---
+
+# 🛠️ Technology Stack
+
+### Machine Learning
+
+* Python
+* scikit-learn
+* Logistic Regression
+* Random Forest
+* XGBoost
+* TF-IDF
+* Cosine Similarity
+
+### Backend
+
+* FastAPI
+* Pydantic
+* Pandas
+* NumPy
+* Joblib
+
+### Data
+
+* Hacker News
+* Bright Data
+* JSON snapshots
+* CSV datasets
+
+### Frontend
+
+* React 19
+* TypeScript
+* Vite
+* Tailwind CSS
+* TanStack Router
+* TanStack React Query
+* Recharts
+* Framer Motion
+* GSAP
+* Lenis
+
+### Deployment
+
+* **Vercel** — Frontend
+* **Render** — FastAPI backend
+
+### Testing
+
+* Pytest
+
+---
+
+# 📌 Project Status
+
+### Completed
+
+* [x] Historical Hacker News collection
+* [x] Raw snapshot pipeline
+* [x] Data ingestion
+* [x] Temporal feature engineering
+* [x] Temporal leakage prevention
+* [x] Virality classification
+* [x] Model benchmarking
+* [x] Production ML model
+* [x] Title intelligence
+* [x] TF-IDF similarity
+* [x] Live story monitoring
+* [x] Momentum tracking
+* [x] Trending topics
+* [x] Domain intelligence
+* [x] Posting-time analysis
+* [x] FastAPI backend
+* [x] React frontend
+* [x] Production deployment
+* [x] Automated testing
+
+### Next
+
+* [ ] Larger historical dataset
+* [ ] Semantic title embeddings
+* [ ] Author-level features
+* [ ] Topic embeddings
+* [ ] Online retraining
+* [ ] Model calibration
+* [ ] Survival analysis
+* [ ] Causal analysis
+* [ ] Production observability
+
+---
+
+# 🌐 Deployment
+
+InterScout is deployed as a split full-stack application.
+
+```text
+                    INTERNET
+                        │
+                        ▼
+        ┌────────────────────────────┐
+        │          VERCEL            │
+        │                            │
+        │     React + TypeScript     │
+        │        Frontend            │
+        └──────────────┬─────────────┘
+                       │
+                       │ HTTPS REST
+                       ▼
+        ┌────────────────────────────┐
+        │           RENDER           │
+        │                            │
+        │          FastAPI           │
+        │                            │
+        │ ┌────────┐ ┌────────────┐ │
+        │ │   ML   │ │ Title NLP  │ │
+        │ └────────┘ └────────────┘ │
+        │                            │
+        │ ┌────────┐ ┌────────────┐ │
+        │ │Monitor │ │   Trends   │ │
+        │ └────────┘ └────────────┘ │
+        └──────────────┬─────────────┘
+                       │
+             ┌─────────┴─────────┐
+             ▼                   ▼
+       Hacker News          Historical
+          APIs                 Data
+```
+
+---
+
+# ⭐ Try It
+
+### Live Application
+
+[Launch InterScout →](https://interscout-webscrapper-fqcu.vercel.app/?utm_source=chatgpt.com)
+
+### Backend
+
+[InterScout API →](https://interscout-webscrappervirality-intel-api.onrender.com/?utm_source=chatgpt.com)
+
+### API Documentation
+
+[Swagger Documentation →](https://interscout-webscrappervirality-intel-api.onrender.com/docs?utm_source=chatgpt.com)
+
+---
+
+# 📜 License
+
+This project is licensed under the MIT License.
+
+See [`LICENSE`](./LICENSE) for details.
+
+---
+
+# 🚀 Final Summary
+
+**InterScout is a full-stack temporal intelligence platform for Hacker News.**
+
+It combines:
+
+```text
+                    ┌──────────────────┐
+                    │   DATA           │
+                    │ Hacker News      │
+                    │ Bright Data      │
+                    └────────┬─────────┘
+                             │
+                             ▼
+                    ┌──────────────────┐
+                    │   FEATURES       │
+                    │ Velocity         │
+                    │ Rank Movement    │
+                    │ Engagement       │
+                    │ Title Signals    │
+                    └────────┬─────────┘
+                             │
+                             ▼
+                    ┌──────────────────┐
+                    │   INTELLIGENCE   │
+                    │ ML Prediction    │
+                    │ TF-IDF           │
+                    │ Trend Analysis   │
+                    │ Monitoring       │
+                    └────────┬─────────┘
+                             │
+                             ▼
+                    ┌──────────────────┐
+                    │    FASTAPI       │
+                    │    BACKEND       │
+                    └────────┬─────────┘
+                             │
+                             ▼
+                    ┌──────────────────┐
+                    │  REACT FRONTEND  │
+                    │     VERCEL       │
+                    └──────────────────┘
+```
+
+> **InterScout turns the first few minutes of a Hacker News story into a measurable signal — combining temporal machine learning, NLP, historical intelligence, and real-time monitoring to understand what makes content take off.**
+
+---
+
+### Built as an experiment in **temporal machine learning, content intelligence, and real-time prediction.**
