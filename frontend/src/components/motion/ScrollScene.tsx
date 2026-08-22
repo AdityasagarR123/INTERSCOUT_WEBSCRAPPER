@@ -24,23 +24,15 @@ function useSmoothProgress(target: React.RefObject<HTMLElement | null>, offset: 
 export function ScrollLift({
   children,
   className,
-  distance = 30,
 }: {
   children: ReactNode;
   className?: string;
   distance?: number;
 }) {
   return (
-    <motion.div
-      className={cn(className)}
-      initial={{ opacity: 0, y: distance, filter: "blur(4px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-      viewport={{ once: true, margin: "-8% 0px" }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      style={{ willChange: "transform, opacity, filter" }}
-    >
+    <div className={cn(className)}>
       {children}
-    </motion.div>
+    </div>
   );
 }
 
