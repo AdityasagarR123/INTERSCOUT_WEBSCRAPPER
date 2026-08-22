@@ -3,12 +3,7 @@
  * Base URL comes from VITE_API_URL — never hardcode a host in components.
  */
 
-const rawApiUrl = (import.meta.env["VITE_API_URL"] ?? "").trim().replace(/\/+$/, "");
-export const API_URL = rawApiUrl
-  ? rawApiUrl.startsWith("http://") || rawApiUrl.startsWith("https://")
-    ? rawApiUrl
-    : `https://${rawApiUrl}`
-  : "";
+export const API_URL = (import.meta.env["VITE_API_URL"] ?? "").replace(/\/$/, "");
 
 /** Optional dev-mode key. Do not ship a real server secret in a public build. */
 const API_KEY = import.meta.env["VITE_API_KEY"] ?? "";
@@ -28,7 +23,7 @@ export class ApiError extends Error {
 export class ApiNotConfiguredError extends Error {
   constructor() {
     super(
-      "No API endpoint configured. Set VITE_API_URL to your FastAPI base URL (e.g. https://your-backend.onrender.com).",
+      "No API endpoint configured. Set VITE_API_URL to your FastAPI base URL (e.g. http://localhost:8000).",
     );
     this.name = "ApiNotConfiguredError";
   }
@@ -74,8 +69,7 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
 
   const { method = "GET", body, query, signal } = options;
 
-  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
-  const url = new URL(`${API_URL}${normalizedPath}`);
+  const url = new URL(`${API_URL}${path}`);
   if (query) {
     for (const [key, value] of Object.entries(query)) {
       if (value !== undefined && value !== "") url.searchParams.set(key, String(value));
@@ -92,8 +86,7 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
     if (body !== undefined) init.body = JSON.stringify(body);
     if (signal) init.signal = signal;
     response = await fetch(url.toString(), init);
-  } catch (err) {
-    console.error("Fetch failed for", url.toString(), err);
+  } catch {
     throw new ApiError(
       "Can't reach the intelligence service. Check that the API is running and allows this origin.",
       0,

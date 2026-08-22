@@ -10,9 +10,9 @@ function useSmoothProgress(target: React.RefObject<HTMLElement | null>, offset: 
     offset: offset as any,
   });
   return useSpring(scrollYProgress, {
-    stiffness: 85,
-    damping: 25,
-    mass: 0.35,
+    stiffness: 170,
+    damping: 28,
+    mass: 0.25,
     restDelta: 0.0005,
   });
 }
@@ -24,18 +24,24 @@ function useSmoothProgress(target: React.RefObject<HTMLElement | null>, offset: 
 export function ScrollLift({
   children,
   className,
+  distance = 70,
 }: {
   children: ReactNode;
   className?: string;
   distance?: number;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const progress = useSmoothProgress(ref, ["start 1", "start 0.62"]);
+  const y = useTransform(progress, [0, 1], [distance, 0]);
+  const opacity = useTransform(progress, [0, 0.35, 1], [0.2, 1, 1]);
+  const blurValue = useTransform(progress, [0, 0.35], [5, 0]);
+  const filter = useTransform(blurValue, (v) => `blur(${v}px)`);
+
   return (
     <motion.div
+      ref={ref}
       className={cn(className)}
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
-      style={{ willChange: "transform, opacity" }}
+      style={{ y, opacity, filter, willChange: "transform, opacity, filter" }}
     >
       {children}
     </motion.div>

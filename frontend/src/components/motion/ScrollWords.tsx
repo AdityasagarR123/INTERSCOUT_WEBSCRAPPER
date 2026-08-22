@@ -21,12 +21,12 @@ export function ScrollWords({
   const ref = useRef<HTMLParagraphElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 0.9", "end 0.55"],
+    offset: ["start 0.95", "end 0.75"],
   });
   const progress = useSpring(scrollYProgress, {
-    stiffness: 90,
-    damping: 26,
-    mass: 0.4,
+    stiffness: 180,
+    damping: 28,
+    mass: 0.25,
     restDelta: 0.0005,
   });
 
@@ -37,7 +37,7 @@ export function ScrollWords({
       {words.map((word, i) => {
         // All words must finish inking in well before progress hits 1, otherwise
         // the tail of the sentence stays blurred even at the end of the scroll.
-        const FINISH = 0.62;
+        const FINISH = 0.45;
         const step = FINISH / words.length;
         // Overlapping windows (each word fades over ~2.6 slots) => continuous wave.
         const start = i * step;

@@ -5,6 +5,7 @@ import { GlassCard } from "@/components/ui/glass-card";
 import { ScrollWords } from "@/components/motion/ScrollWords";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { ScrollLift, ScrollDrift } from "@/components/motion/ScrollScene";
+import heroVideo from "@/assets/hero-loop.mp4.asset.json";
 import clouds from "@/assets/hero-clouds.jpg";
 import grainField from "@/assets/grain-field-hero.jpg";
 
@@ -56,7 +57,7 @@ function Landing() {
     <div>
       <ScrollExpandMedia
         mediaType="video"
-        mediaSrc="/fifnal-video.mp4"
+        mediaSrc={heroVideo.url}
         posterSrc={clouds}
         bgImageSrc={grainField}
         title="Post with intent"

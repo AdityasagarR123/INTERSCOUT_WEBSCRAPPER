@@ -10,7 +10,7 @@ export function Reveal({
   children,
   className,
   delay = 0,
-  y = 20,
+  y = 34,
 }: {
   children: ReactNode;
   className?: string;
@@ -22,8 +22,8 @@ export function Reveal({
       className={cn(className)}
       initial={{ opacity: 0, y, filter: "blur(4px)" }}
       whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-      viewport={{ once: true, margin: "-12% 0px -12% 0px" }}
-      transition={{ duration: 0.45, delay, ease: EASE }}
+      viewport={{ once: true, margin: "0px 0px -6% 0px" }}
+      transition={{ duration: 0.5, delay, ease: EASE }}
       style={{ willChange: "transform, opacity, filter" }}
     >
       {children}
@@ -44,10 +44,10 @@ export function CurtainReveal({
   return (
     <motion.div
       className={cn("overflow-hidden", className)}
-      initial={{ clipPath: "inset(105% 0% 0% 0%)", y: 20 }}
+      initial={{ clipPath: "inset(105% 0% 0% 0%)", y: 24 }}
       whileInView={{ clipPath: "inset(-5% 0% 0% 0%)", y: 0 }}
-      viewport={{ once: true, margin: "-8% 0px" }}
-      transition={{ duration: 0.6, delay, ease: EASE }}
+      viewport={{ once: true, margin: "0px 0px -5% 0px" }}
+      transition={{ duration: 0.7, delay, ease: EASE }}
       style={{ willChange: "transform, clip-path" }}
     >
       {children}
@@ -59,7 +59,7 @@ export function CurtainReveal({
 export function Stagger({
   children,
   className,
-  gap = 0.09,
+  gap = 0.05,
 }: {
   children: ReactNode;
   className?: string;
@@ -70,7 +70,7 @@ export function Stagger({
       className={cn(className)}
       initial="hidden"
       whileInView="shown"
-      viewport={{ once: true, margin: "-10% 0px" }}
+      viewport={{ once: true, margin: "0px 0px -5% 0px" }}
       variants={{ hidden: {}, shown: { transition: { staggerChildren: gap } } }}
     >
       {children}
@@ -81,7 +81,7 @@ export function Stagger({
 export function StaggerItem({
   children,
   className,
-  y = 15,
+  y = 28,
 }: {
   children: ReactNode;
   className?: string;
@@ -91,10 +91,10 @@ export function StaggerItem({
     <motion.div
       className={cn(className)}
       variants={{
-        hidden: { opacity: 0, y, filter: "blur(3px)" },
+        hidden: { opacity: 0, y, filter: "blur(4px)" },
         shown: { opacity: 1, y: 0, filter: "blur(0px)" },
       }}
-      transition={{ duration: 0.4, ease: EASE }}
+      transition={{ duration: 0.5, ease: EASE }}
       style={{ willChange: "transform, opacity, filter" }}
     >
       {children}
