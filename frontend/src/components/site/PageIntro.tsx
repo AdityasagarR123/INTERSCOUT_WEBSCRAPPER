@@ -19,7 +19,7 @@ export function PageIntro({
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.3 }}
         className="label-eyebrow text-muted-foreground"
       >
         {eyebrow}
@@ -27,18 +27,18 @@ export function PageIntro({
 
       <div className="mt-6 grid gap-10 md:grid-cols-12">
         <motion.h1
-          initial={{ opacity: 0, y: 28 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
           className="display-xl md:col-span-7"
         >
           {title} {accent ? <span className="serif-accent">{accent}</span> : null}
         </motion.h1>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.45, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
           className="md:col-span-5 md:pt-2"
         >
           <p className="text-muted-foreground max-w-md text-sm leading-relaxed">{description}</p>

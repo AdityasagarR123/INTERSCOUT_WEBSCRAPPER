@@ -16,10 +16,10 @@ export function SmoothScroll() {
     void import("lenis").then(({ default: Lenis }) => {
       if (cancelled) return;
       const instance = new Lenis({
-        duration: 1.35,
-        easing: (t: number) => 1 - Math.pow(1 - t, 3.2),
-        touchMultiplier: 1.6,
-        wheelMultiplier: 0.9,
+        duration: 0.8,
+        easing: (t: number) => 1 - Math.pow(1 - t, 4),
+        touchMultiplier: 1.5,
+        wheelMultiplier: 1.0,
       });
       lenis = instance as unknown as typeof lenis;
       const loop = (time: number) => {

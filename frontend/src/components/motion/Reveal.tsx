@@ -10,7 +10,7 @@ export function Reveal({
   children,
   className,
   delay = 0,
-  y = 34,
+  y = 20,
 }: {
   children: ReactNode;
   className?: string;
@@ -20,10 +20,10 @@ export function Reveal({
   return (
     <motion.div
       className={cn(className)}
-      initial={{ opacity: 0, y, filter: "blur(6px)" }}
+      initial={{ opacity: 0, y, filter: "blur(4px)" }}
       whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       viewport={{ once: true, margin: "-12% 0px -12% 0px" }}
-      transition={{ duration: 1.15, delay, ease: EASE }}
+      transition={{ duration: 0.45, delay, ease: EASE }}
       style={{ willChange: "transform, opacity, filter" }}
     >
       {children}
@@ -44,10 +44,10 @@ export function CurtainReveal({
   return (
     <motion.div
       className={cn("overflow-hidden", className)}
-      initial={{ clipPath: "inset(105% 0% 0% 0%)", y: 30 }}
+      initial={{ clipPath: "inset(105% 0% 0% 0%)", y: 20 }}
       whileInView={{ clipPath: "inset(-5% 0% 0% 0%)", y: 0 }}
       viewport={{ once: true, margin: "-8% 0px" }}
-      transition={{ duration: 1.5, delay, ease: EASE }}
+      transition={{ duration: 0.6, delay, ease: EASE }}
       style={{ willChange: "transform, clip-path" }}
     >
       {children}
@@ -81,7 +81,7 @@ export function Stagger({
 export function StaggerItem({
   children,
   className,
-  y = 28,
+  y = 15,
 }: {
   children: ReactNode;
   className?: string;
@@ -91,10 +91,10 @@ export function StaggerItem({
     <motion.div
       className={cn(className)}
       variants={{
-        hidden: { opacity: 0, y, filter: "blur(5px)" },
+        hidden: { opacity: 0, y, filter: "blur(3px)" },
         shown: { opacity: 1, y: 0, filter: "blur(0px)" },
       }}
-      transition={{ duration: 1.05, ease: EASE }}
+      transition={{ duration: 0.4, ease: EASE }}
       style={{ willChange: "transform, opacity, filter" }}
     >
       {children}
